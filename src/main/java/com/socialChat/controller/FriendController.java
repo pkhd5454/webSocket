@@ -22,6 +22,7 @@ import com.socialChat.persistence.FriendRepository;
 import com.socialChat.persistence.MemberRepository;
 
 @RequestMapping("/socialChat")
+@Secured("ROLE_USER")
 @RestController
 public class FriendController {
 	@Autowired
@@ -30,22 +31,18 @@ public class FriendController {
 	@Autowired
 	FriendRepository frepo;
 	
-	@Secured("ROLE_USER")
 	@GetMapping("/userName/{myId}")
 	public ResponseEntity<List<String>> getFriend(@PathVariable("myId") String myId) {
 		List<String> friends = frepo.getFriend(myId);
 		return new ResponseEntity<List<String>>(friends, HttpStatus.OK);
 	}
 	
-	@Secured("ROLE_USER")
 	@GetMapping("/userName/{myId}/{userName}")
 	public ResponseEntity<List<MemberDTO>> isUser(@PathVariable("myId") String myId, @PathVariable("userName") String userName) {
 		List<MemberDTO> userList = repo.getUserByUserName(myId, userName);
 		return new ResponseEntity<List<MemberDTO>>(userList, HttpStatus.OK);
 	}
 	
-	
-	@Secured("ROLE_USER")
 	@Transactional
 	@PostMapping("/friend/{user}/{friend}")
 	public ResponseEntity<Void> addFriend(@PathVariable("user") String user, @PathVariable("friend") String friend) {
@@ -63,7 +60,6 @@ public class FriendController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@Secured("ROLE_USER")
 	@Transactional
 	@DeleteMapping("/friend/{user}/{friend}")
 	public ResponseEntity<List<String>> deleteFriend(@PathVariable("user") String user, @PathVariable("friend") String friend) {

@@ -65,7 +65,7 @@ public class FriendRepositoryTests {
 	@Test
 	public void testGetFriendRequest() {
 		System.out.println("----------------------------------------------");
-		repo.getFriendRequest("friend1").forEach(item -> System.out.println(item));
+		repo.getFriendRequest("test12").forEach(item -> System.out.println(item));
 		System.out.println("----------------------------------------------");
 		
 	}

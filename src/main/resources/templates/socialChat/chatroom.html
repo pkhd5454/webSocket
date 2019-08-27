@@ -11,7 +11,7 @@
 		<!-- header -->
 		<th:block th:insert="~{/socialChatLayout/header::header}"></th:block>
 		<!-- content -->
-		<div class="container-fluid text-center">
+		<div class="container-fluid text-center" style="height: 100%; width: 100%">
 			<div class="row content">
 				<div class="col-sm-2">
 					
@@ -19,10 +19,10 @@
 				<div class="col-sm-8 text-left">
 					<h1 th:text="${room.roomName}"></h1>
 					<hr>
-					<button id="deleteBtn" class="btn btn-danger" style="float: right">채팅방
-						삭제</button>
 					<div th:with="member=${#authentication.principal.member.id}">
 						<div th:if="${member} == ${room.roomOwner}">
+						<button id="deleteBtn" class="btn btn-danger" style="float: right">채팅방
+						삭제</button>
 							<form th:action="@{/socialChat/deleteChatRoom}" th:method="post"
 								id="deleteForm">
 								<input type="hidden" name="roomId" th:value="${room.roomId}">
@@ -48,6 +48,7 @@
 	<th:block layout:fragment="script">
 		<script th:inline="javascript">
 			$(document).ready(function(){
+				var csrf = JSON.parse('[[${_csrf}]]');
 				var roomId = [[${room.roomId}]];
 				var userId = [[${#authentication.principal.member.id}]];
 				var socket = new SockJS('/ws');

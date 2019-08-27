@@ -13,22 +13,23 @@
 		<div class="page-header">
 			<h1>회원가입</h1>
 		</div>
-		<form th:action="@{/socialChat/signUp}" th:method="post">
+		<form th:action="@{/socialChat/signUp}" th:method="post" id="userForm">
 			<div class="form-group">
 				<label for="id">아이디</label> <input type="text" class="form-control"
-					name="id">
+					name="id" required="required" id="userId">
+					<button class="btn btn-primary" id="checkdup">중복 확인</button>
 			</div>
 			<div class="form-group">
 				<label for="password">비밀번호</label> <input type="password"
-					class="form-control" name="password">
+					class="form-control" name="password" required="required">
 			</div>
 			<div class="form-group">
 				<label for="name">이름</label> <input type="text" class="form-control"
-					name="name">
+					name="name" required="required">
 			</div>
 			<div class="form-group">
 				<label for="email">이메일</label> <input type="email"
-					class="form-control" name="email">
+					class="form-control" name="email" required="required">
 			</div>
 			<div class="form-group">
 				<label for="gender">성별</label> <br> <input type="radio"
@@ -37,7 +38,7 @@
 			</div>
 			<div class="form-group">
 				<label for="phoneNumber">전화번호</label> <input type="text"
-					class="form-control" name="phoneNumber">
+					class="form-control" name="phoneNumber" required="required">
 			</div>
 			<div class="form-group">
 				<label for="nickName">별명</label> <input type="text"
@@ -46,7 +47,7 @@
 			<input type="hidden" name="roles[0].role" value="USER"> <input
 				type="hidden" th:name="${_csrf.parameterName}"
 				th:value="${_csrf.token}" />
-			<button type="submit" class="btn btn-success">가입하기</button>
+			<button type="submit" class="btn btn-success" disabled="disabled" id="submitBtn">가입하기</button>
 			<button type="button" class="btn" id="goHome">홈으로</button>
 		</form>
 	</div>
@@ -54,9 +55,31 @@
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
 		$(document).ready(function() {
+			function success(validation) {
+				if(validation == "ok") {
+					alert("사용 가능한 아이디 입니다.");
+					document.getElementById("submitBtn").disabled = false;
+					document.getElementById("userId").readOnly = true;
+				}
+				else {
+					alert("이미 사용중인 아이디 입니다.");
+					document.getElementById("userId").focus();
+				}
+			}
+			
 			var goHome = $("#goHome");
 			goHome.on("click", function(e) {
 				window.location.replace("/socialChat/home");
+			});
+			
+			$("#checkdup").on("click", function(e){
+				e.preventDefault();
+				var userId = $("#userId").val();
+				$.ajax({
+					type:'get',
+					url:'/socialChat/validate/'+userId,
+					success: success
+				});
 			});
 		});
 	</script>

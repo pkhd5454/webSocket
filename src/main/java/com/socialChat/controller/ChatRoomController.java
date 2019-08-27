@@ -3,6 +3,7 @@ package com.socialChat.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import com.socialChat.dto.ChatRoom;
 import com.socialChat.persistence.ChatRoomRepository;
 
 @Controller
+@Secured("ROLE_USER")
 @RequestMapping("/socialChat")
 public class ChatRoomController {
 	@Autowired
@@ -24,9 +26,7 @@ public class ChatRoomController {
 		List<ChatRoom> roomList = (List<ChatRoom>) repo.findAll();
 		model.addAttribute("roomList", roomList);
 	}
-	
-	
-	
+
 	@PostMapping("/chatroom")
 	public String entranceRoom(Model model, @RequestParam("roomId") String roomId) {
 		ChatRoom room = repo.findById(roomId).get();

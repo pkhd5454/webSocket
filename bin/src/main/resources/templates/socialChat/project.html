@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/socialChatLayout/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>프로젝트 소개</title>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<!-- header -->
+		<th:block th:insert="~{/socialChatLayout/header::header}"></th:block>
+		<!-- content -->
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2">
+					
+				</div>
+				<div class="col-sm-8 text-left">
+					프로젝트 설명 페이지
+					
+				</div>
+				<div class="col-sm-2">
+					
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+		<th:block th:insert="~{/socialChatLayout/footer::footer}"></th:block>
+	</th:block>
+
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			
+		</script>
+	</th:block>
+</body>
+</html>

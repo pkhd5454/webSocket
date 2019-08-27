@@ -20,19 +20,18 @@ import com.socialChat.dto.FriendShipPK;
 import com.socialChat.persistence.FriendRepository;
 
 @RequestMapping("/socialChat")
+@Secured("ROLE_USER")
 @RestController
 public class FriendRequestController {
 	@Autowired
 	FriendRepository repo;
 	
-	@Secured("ROLE_USER")
 	@GetMapping("/friendRequest/{userId}")
 	public ResponseEntity<List<String>> getFriendRequest(@PathVariable("userId") String userId) {
 		List<String> friendRequest = repo.getFriendRequest(userId);
 		return new ResponseEntity<List<String>>(friendRequest, HttpStatus.OK);
 	}
 	
-	@Secured("ROLE_USER")
 	@Transactional
 	@PostMapping("/friendRequest/{userId}/{friendId}")
 	public ResponseEntity<List<String>> acceptFriendRequest(@PathVariable("userId") String userId, @PathVariable("friendId") String friendId) {
@@ -47,7 +46,6 @@ public class FriendRequestController {
 		return new ResponseEntity<List<String>>(friendRequest, HttpStatus.OK);
 	}
 	
-	@Secured("ROLE_USER")
 	@Transactional
 	@DeleteMapping("/friendRequest/{userId}/{friendId}")
 	public ResponseEntity<List<String>> denyFriendRequest(@PathVariable("userId") String userId, @PathVariable("friendId") String friendId) {

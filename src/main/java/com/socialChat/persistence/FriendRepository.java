@@ -17,7 +17,7 @@ public interface FriendRepository extends CrudRepository<FriendShip, FriendShipP
 	public List<String> getFriend(@Param("userId") String userId);
 	
 	
-	@Query("SELECT f.friendPK.user FROM FriendShip f WHERE f.friendPK.friend NOT IN( "
+	@Query("SELECT f.friendPK.user FROM FriendShip f WHERE f.friendPK.user NOT IN( "
 			+ "select f1.friendPK.friend from FriendShip f1 inner join FriendShip f2 "
 			+ "on f1.friendPK.user = f2.friendPK.friend and f1.friendPK.friend = f2.friendPK.user) "
 			+ "AND f.friendPK.friend=:friendId")

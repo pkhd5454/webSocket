@@ -1,10 +1,7 @@
 package com.socialChat.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +15,9 @@ import com.socialChat.persistence.FriendRepository;
 import com.socialChat.persistence.MemberRepository;
 import com.socialChat.security.CustomUser;
 
-import lombok.extern.java.Log;
-
 @RequestMapping("/socialChat")
+@Secured("ROLE_USER")
 @Controller
-@Log
 public class FriendViewController {
 	@Autowired
 	FriendRepository repo;
@@ -34,7 +29,6 @@ public class FriendViewController {
 	SessionRegistry sessionRegistry;
 	
 	@GetMapping("/friend")
-	@Secured("ROLE_USER")
 	public void friend() {
 		
 	}

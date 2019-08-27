@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/socialChatLayout/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Login</title>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div class="container" layout:fragment="content">
+		<div class="panel-heading">
+			<h2>
+				<a th:href="@{/socialChat/home}" style="text-decoration: none">Social
+					Web Chatting</a>
+			</h2>
+		</div>
+		<div class="panel-body">
+			<form th:action="@{/socialChat/login}" method="post">
+				<div class="form-group">
+					<input type="text" class="form-control input-lg" id="username"
+						placeholder="아이디" name="username">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control input-lg" id="password"
+						placeholder="비밀번호" name="password">
+				</div>
+				<div th:if="${param.error != null}">
+					<div class="panel panel-danger">
+						<div class="panel-body">아이디와 비밀번호를 확인하세요.</div>
+					</div>
+				</div>
+				Remember-me <input type="checkbox" name="remember-me" />
+				<button type="submit" class="btn btn-primary">로그인</button>
+			</form>
+		</div>
+	</div>
+
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			
+		</script>
+	</th:block>
+</body>
+</html>
