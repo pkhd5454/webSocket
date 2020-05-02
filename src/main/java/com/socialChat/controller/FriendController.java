@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.socialChat.dto.FriendShip;
-import com.socialChat.dto.FriendShipPK;
-import com.socialChat.dto.MemberDTO;
+import com.socialChat.dto.Member;
 import com.socialChat.persistence.FriendRepository;
 import com.socialChat.persistence.MemberRepository;
 
@@ -38,9 +37,9 @@ public class FriendController {
 	}
 	
 	@GetMapping("/userName/{myId}/{userName}")
-	public ResponseEntity<List<MemberDTO>> isUser(@PathVariable("myId") String myId, @PathVariable("userName") String userName) {
-		List<MemberDTO> userList = repo.getUserByUserName(myId, userName);
-		return new ResponseEntity<List<MemberDTO>>(userList, HttpStatus.OK);
+	public ResponseEntity<List<Member>> isUser(@PathVariable("myId") String myId, @PathVariable("userName") String userName) {
+		List<Member> userList = repo.getUserByUserName(myId, userName);
+		return new ResponseEntity<List<Member>>(userList, HttpStatus.OK);
 	}
 	
 	@Transactional

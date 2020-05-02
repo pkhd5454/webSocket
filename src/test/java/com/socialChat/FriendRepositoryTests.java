@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.socialChat.dto.FriendShipPK;
 import com.socialChat.persistence.FriendRepository;
 import com.socialChat.persistence.MemberRepository;
 

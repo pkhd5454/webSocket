@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.socialChat.dto.MemberDTO;
+import com.socialChat.dto.Member;
 import com.socialChat.persistence.FriendRepository;
 import com.socialChat.persistence.MemberRepository;
 import com.socialChat.security.CustomUser;
@@ -35,7 +35,7 @@ public class FriendViewController {
 	
 	@PostMapping("/friendInfo")
 	public void friendInfo(@RequestParam("friendId") String friendId, Model model) {
-		MemberDTO friend = mrepo.findById(friendId).get();
+		Member friend = mrepo.findById(friendId).get();
 		String status ="notExist";
 		for(Object user : sessionRegistry.getAllPrincipals()) {	
 			CustomUser customUser = (CustomUser) user;

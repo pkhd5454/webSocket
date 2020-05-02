@@ -15,7 +15,7 @@ import com.socialChat.persistence.ChatRoomRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Commit
-public class ChatRoomRepositoryTests {
+public class ChatroomRepositoryTests {
 	@Autowired
 	ChatRoomRepository repo;
 	
