@@ -16,7 +16,6 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.socialChat.dto.ChatRoom;
-import com.socialChat.dto.ConnectedUser;
 import com.socialChat.persistence.ChatRoomRepository;
 import com.socialChat.persistence.connectedUserRepository;
 import com.socialChat.webSocket.ChatMessage.MessageType;
