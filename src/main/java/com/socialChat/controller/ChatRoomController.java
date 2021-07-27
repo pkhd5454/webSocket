@@ -1,7 +1,7 @@
 package com.socialChat.controller;
 
-import java.util.List;
-
+import com.socialChat.dao.accessor.ChatroomDao;
+import com.socialChat.dao.entity.Chatroom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -11,44 +11,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.socialChat.dto.ChatRoom;
-import com.socialChat.persistence.ChatRoomRepository;
-
 @Controller
 @Secured("ROLE_USER")
 @RequestMapping("/socialChat")
 public class ChatRoomController {
-	@Autowired
-	ChatRoomRepository repo;
-	
-	@GetMapping("/room")
-	public void room(Model model) {
-		List<ChatRoom> roomList = (List<ChatRoom>) repo.findAll();
-		model.addAttribute("roomList", roomList);
-	}
+  @Autowired ChatroomDao chatroomDao;
 
-	@PostMapping("/chatroom")
-	public String entranceRoom(Model model, @RequestParam("roomId") String roomId) {
-		ChatRoom room = repo.findById(roomId).get();
-		model.addAttribute("room", room);
-		return "socialChat/chatroom";
-	}
-	
-	@PostMapping("/deleteChatRoom")
-	public String deleteChatRoom(@RequestParam("roomId") String roomId) {
-		repo.deleteById(roomId);
-		return "redirect:/socialChat/home";
-	}
-	
-	@GetMapping("/createRoom")
-	public void createRoom() {
-		
-	}
-	
-	@PostMapping("/createRoom")
-	public String postCreateRoom(@RequestParam("roomName") String roomName, @RequestParam("roomOwner") String roomOwner) {
-		ChatRoom chatroom = ChatRoom.create(roomName, roomOwner);
-		repo.save(chatroom);
-		return "redirect:/socialChat/room";
-	}
+  @GetMapping("/room")
+  public void room(Model model) {
+    model.addAttribute("roomList", chatroomDao.findAll());
+  }
+
+  @PostMapping("/chatroom")
+  public String entranceRoom(Model model, @RequestParam("roomId") String roomId) {
+    model.addAttribute("room", chatroomDao.findById(roomId));
+    return "socialChat/chatroom";
+  }
+
+  @PostMapping("/deleteChatRoom")
+  public String deleteChatRoom(@RequestParam("roomId") String roomId) {
+    chatroomDao.deleteById(roomId);
+    return "redirect:/socialChat/home";
+  }
+
+  @GetMapping("/createRoom")
+  public void createRoom() {}
+
+  @PostMapping("/createRoom")
+  public String postCreateRoom(
+      @RequestParam("roomName") String roomName, @RequestParam("roomOwner") String roomOwner) {
+    chatroomDao.save(Chatroom.create(roomName, roomOwner));
+    return "redirect:/socialChat/room";
+  }
 }

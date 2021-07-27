@@ -23,7 +23,7 @@ public class MemberRole {
 	// 일련번호
 	@Id
 	@EqualsAndHashCode.Include
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "no")
 	private Long no;
 

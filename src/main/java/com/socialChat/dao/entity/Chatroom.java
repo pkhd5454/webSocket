@@ -13,7 +13,6 @@ import lombok.ToString;
 
 /** 채팅방 */
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
