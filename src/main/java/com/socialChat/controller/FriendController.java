@@ -1,10 +1,12 @@
 package com.socialChat.controller;
 
+import com.socialChat.dao.accessor.FriendshipDao;
+import com.socialChat.dao.accessor.MemberDao;
+import com.socialChat.dao.entity.Friendship;
+import com.socialChat.dao.entity.Member;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -15,65 +17,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.socialChat.dto.FriendShip;
-import com.socialChat.dto.Member;
-import com.socialChat.persistence.FriendRepository;
-import com.socialChat.persistence.MemberRepository;
-
 @RequestMapping("/socialChat")
 @Secured("ROLE_USER")
 @RestController
+@RequiredArgsConstructor
 public class FriendController {
-	@Autowired
-	MemberRepository repo;
-	
-	@Autowired
-	FriendRepository frepo;
-	
-	@GetMapping("/userName/{myId}")
-	public ResponseEntity<List<String>> getFriend(@PathVariable("myId") String myId) {
-		List<String> friends = frepo.getFriend(myId);
-		return new ResponseEntity<List<String>>(friends, HttpStatus.OK);
-	}
-	
-	@GetMapping("/userName/{myId}/{userName}")
-	public ResponseEntity<List<Member>> isUser(@PathVariable("myId") String myId, @PathVariable("userName") String userName) {
-		List<Member> userList = repo.getUserByUserName(myId, userName);
-		return new ResponseEntity<List<Member>>(userList, HttpStatus.OK);
-	}
-	
-	@Transactional
-	@PostMapping("/friend/{user}/{friend}")
-	public ResponseEntity<Void> addFriend(@PathVariable("user") String user, @PathVariable("friend") String friend) {
-		FriendShipPK pk = new FriendShipPK();
-		pk.setUser(user);
-		pk.setFriend(friend);	
-		
-		if(frepo.existsById(pk))
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
-		FriendShip friendShip = new FriendShip();
-		friendShip.setFriendPK(pk);
-		frepo.save(friendShip);
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	
-	@Transactional
-	@DeleteMapping("/friend/{user}/{friend}")
-	public ResponseEntity<List<String>> deleteFriend(@PathVariable("user") String user, @PathVariable("friend") String friend) {
-		FriendShipPK pk = new FriendShipPK();
-		pk.setUser(user);
-		pk.setFriend(friend);
-		frepo.deleteById(pk);
-		
-		FriendShipPK pk2 = new FriendShipPK();
-		pk2.setUser(friend);
-		pk2.setFriend(user);
-		frepo.deleteById(pk2);
-		
-		List<String> friends = frepo.getFriend(user);
-		return new ResponseEntity<List<String>>(friends, HttpStatus.OK);
-	}
-	
+  private final MemberDao memberDao;
+  private final FriendshipDao friendshipDao;
+
+  @GetMapping("/userName/{myId}")
+  public ResponseEntity<List<String>> getFriend(@PathVariable("myId") String myId) {
+    List<String> friends = friendshipDao.getFriend(myId);
+    return new ResponseEntity<>(friends, HttpStatus.OK);
+  }
+
+  @GetMapping("/userName/{myId}/{userName}")
+  public ResponseEntity<List<Member>> isUser(
+      @PathVariable("myId") String myId, @PathVariable("userName") String userName) {
+    List<Member> userList = memberDao.getUserByUserName(myId, userName);
+    return new ResponseEntity<>(userList, HttpStatus.OK);
+  }
+
+  @Transactional
+  @PostMapping("/friend/{user}/{friend}")
+  public ResponseEntity<Void> addFriend(
+      @PathVariable("user") String user, @PathVariable("friend") String friend) {
+    if (friendshipDao.findById(user, friend) != Friendship.NONE) {
+      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+    }
+
+    Friendship friendship = new Friendship(user, friend);
+    friendshipDao.save(friendship);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @Transactional
+  @DeleteMapping("/friend/{user}/{friend}")
+  public ResponseEntity<List<String>> deleteFriend(
+      @PathVariable("user") String user, @PathVariable("friend") String friend) {
+    friendshipDao.deleteById(user, friend);
+    friendshipDao.deleteById(friend, user);
+
+    List<String> friends = friendshipDao.getFriend(user);
+    return new ResponseEntity<>(friends, HttpStatus.OK);
+  }
 }

@@ -4,13 +4,17 @@ import com.socialChat.dao.entity.Friendship;
 import com.socialChat.dao.entity.FriendshipId;
 import com.socialChat.dao.repository.FriendshipRepository;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RequiredArgsConstructor
-public class FriendshipDao {
+public class FriendshipDao extends QuerydslRepositorySupport {
   private final FriendshipRepository repository;
+
+  public FriendshipDao(FriendshipRepository repository) {
+    super(Friendship.class);
+    this.repository = repository;
+  }
 
   public void save(Friendship friendship) {
     repository.save(friendship);
@@ -34,5 +38,13 @@ public class FriendshipDao {
 
   public void deleteById(String member, String friend) {
     deleteById(new FriendshipId(member, friend));
+  }
+
+  public List<String> getFriend(String myId) {
+    return null;
+  }
+
+  public List<String> getFriendRequest(String myId) {
+    return null;
   }
 }
