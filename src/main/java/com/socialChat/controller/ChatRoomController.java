@@ -19,8 +19,9 @@ public class ChatRoomController {
   private final ChatroomDao chatroomDao;
 
   @GetMapping("/room")
-  public void room(Model model) {
+  public String room(Model model) {
     model.addAttribute("roomList", chatroomDao.findAll());
+    return "socialChat/room";
   }
 
   @PostMapping("/chatroom")
@@ -36,7 +37,9 @@ public class ChatRoomController {
   }
 
   @GetMapping("/createRoom")
-  public void createRoom() {}
+  public String createRoom() {
+    return "socialChat/createRoom";
+  }
 
   @PostMapping("/createRoom")
   public String postCreateRoom(

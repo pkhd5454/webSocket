@@ -73,9 +73,4 @@ public class Member {
   @Setter
   @Column(name = "updDate")
   private Date updateDate;
-
-  // 멤버 롤 리스트
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = MemberRole.class)
-  @JoinColumn(name = "member", referencedColumnName = "id")
-  private List<MemberRole> roles;
 }

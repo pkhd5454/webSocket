@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity(name = "memberrole")
+@Entity(name = "member_role")
 public class MemberRole {
 	public static final MemberRole NONE = new MemberRole();
 

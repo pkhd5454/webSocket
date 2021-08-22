@@ -25,7 +25,7 @@
 							<h5>방 이름</h5>
 							<form th:action="@{/socialChat/createRoom}" th:method="post">
 								<input type="text" name="roomName">
-								<input type="hidden" name="roomOwner" th:value="${#authentication.principal.member.id}">
+								<input type="hidden" name="roomOwner">
 								<button type="submit" onkeypress="if( event.keyCode==13 ){$(this).submit();}">방 만들기</button>
 							</form>
 						</div>

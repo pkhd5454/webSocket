@@ -23,7 +23,7 @@ public class CustomUser extends User {
   private Member member;
 
   public CustomUser(Member member) {
-    super(member.getId(), "{noop}" + member.getPassword(), grantAuthority(member.getRoles()));
+    super(member.getId(), "{noop}" + member.getPassword(), grantAuthority(/*member.getRoles()*/null));
     this.member = member;
   }
 
