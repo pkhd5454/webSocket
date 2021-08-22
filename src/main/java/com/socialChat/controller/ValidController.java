@@ -2,7 +2,7 @@ package com.socialChat.controller;
 
 import com.socialChat.dao.accessor.MemberDao;
 import com.socialChat.dao.entity.Member;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/socialChat")
 @RestController
+@RequiredArgsConstructor
 public class ValidController {
-  @Autowired MemberDao memberDao;
+  private final MemberDao memberDao;
 
   @GetMapping("/validate/{userId}")
   public ResponseEntity<String> getValidation(@PathVariable("userId") String userId) {

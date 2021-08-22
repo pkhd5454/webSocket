@@ -8,7 +8,7 @@ import com.socialChat.webSocket.ChatMessage.MessageType;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -19,12 +19,11 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 @Component
+@RequiredArgsConstructor
 public class WebSocketEventListener {
-  @Autowired ConnectedUserRepository connectedUserRepository;
-
-  @Autowired ChatroomDao chatroomDao;
-
-  @Autowired private SimpMessageSendingOperations messagingTemplate;
+  private final ConnectedUserRepository connectedUserRepository;
+  private final ChatroomDao chatroomDao;
+  private final SimpMessageSendingOperations messagingTemplate;
 
   @EventListener
   @Transactional

@@ -4,7 +4,7 @@ import com.socialChat.dao.accessor.FriendshipDao;
 import com.socialChat.dao.accessor.MemberDao;
 import com.socialChat.dao.entity.Member;
 import com.socialChat.security.CustomUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/socialChat")
 @Secured("ROLE_USER")
 @Controller
+@RequiredArgsConstructor
 public class FriendViewController {
-  @Autowired FriendshipDao friendshipDao;
-
-  @Autowired MemberDao memberDao;
-
-  @Autowired SessionRegistry sessionRegistry;
+  private final FriendshipDao friendshipDao;
+  private final MemberDao memberDao;
+  private final SessionRegistry sessionRegistry;
 
   @GetMapping("/friend")
   public void friend() {}

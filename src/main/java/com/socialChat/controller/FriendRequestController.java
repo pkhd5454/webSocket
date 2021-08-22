@@ -4,7 +4,7 @@ import com.socialChat.dao.accessor.FriendshipDao;
 import com.socialChat.dao.entity.Friendship;
 import java.util.List;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/socialChat")
 @Secured("ROLE_USER")
 @RestController
+@RequiredArgsConstructor
 public class FriendRequestController {
-  @Autowired FriendshipDao friendshipDao;
+  private final FriendshipDao friendshipDao;
 
   @GetMapping("/friendRequest/{userId}")
   public ResponseEntity<List<String>> getFriendRequest(@PathVariable("userId") String userId) {

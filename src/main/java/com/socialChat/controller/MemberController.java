@@ -3,7 +3,7 @@ package com.socialChat.controller;
 import com.socialChat.dao.accessor.MemberDao;
 import com.socialChat.dao.entity.Member;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/socialChat")
+@RequiredArgsConstructor
 public class MemberController {
-  @Autowired MemberDao memberDao;
+  private final MemberDao memberDao;
 
   @GetMapping("/signUp")
   public void signUp() {}

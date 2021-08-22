@@ -2,7 +2,7 @@ package com.socialChat.controller;
 
 import com.socialChat.dao.accessor.ChatroomDao;
 import com.socialChat.dao.entity.Chatroom;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @Secured("ROLE_USER")
 @RequestMapping("/socialChat")
+@RequiredArgsConstructor
 public class ChatRoomController {
-  @Autowired ChatroomDao chatroomDao;
+  private final ChatroomDao chatroomDao;
 
   @GetMapping("/room")
   public void room(Model model) {
